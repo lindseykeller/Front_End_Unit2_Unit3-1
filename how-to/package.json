@@ -10,8 +10,12 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
+<<<<<<< HEAD
     "react-scripts": "3.4.3",
     "styled-components": "^5.2.0"
+=======
+    "react-scripts": "3.4.3"
+>>>>>>> b915f35233260a57aee74f7c9da5d7386838f41c
   },
   "scripts": {
     "start": "react-scripts start",
