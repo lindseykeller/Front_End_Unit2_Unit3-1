@@ -70,10 +70,8 @@ const LogInForm =props=>{
             </div>
 
 
-            <Route exact path='/dashboard'>
-          <Dashboard/>
-         </Route> 
-            <Route path='/signup' component={SignUp}/>
+         
+           
         </div>
     )
 }

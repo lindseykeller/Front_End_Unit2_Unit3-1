@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Login from './components/Login'
+import {Route} from 'react-router-dom'
+import SignUp from './components/SignUp'
+import Dashboard from './components/Dashboard'
 
 
 
@@ -10,8 +13,14 @@ function App() {
 
   return (
     <div className="App">
-      <Login users = {users}/>
       
+  
+      <Route exact path ='/' component={Login}/>
+      <Route exact path='/signup'>
+          <SignUp />
+      </Route> 
+      <Route path='/dashboard'component={Dashboard}/>
+         
     </div>
   );
 }

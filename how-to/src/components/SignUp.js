@@ -3,6 +3,10 @@ import {Route,Link} from 'react-router-dom';
 import LogInForm from './Login';
 import * as yup from 'yup';
 import axios from 'axios';
+import styled from 'styled-components'
+
+const Group = styled.div`
+display:block`
 
 
 
@@ -35,9 +39,15 @@ const SignUpForm =props=>{
         name: yup.string().required('Name is a required field').min(2,'minimum tow characters'),
         email: yup.string().email('enter a valid email').required('email is required field'),
         userName: yup.string().required('Must choose a user name').min(4,'minimum four characters'),
-        password: yup.string().required('must enter password').min(6,'minimum six characters'),
-        confirmPassword: yup.string().matches(user.password,'Must match password entered'),
-        terms: yup.boolean.oneOf([false],'please agree the terms'),
+        password: yup.string().required("Please enter your password.").matches(
+          /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+          "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+        )
+        .min(6),
+        confirmPassword: yup.string().required("Please recomfirm your password.")
+        .matches(user.password)
+        .min(6),
+        terms: yup.boolean().oneOf([true],'please agree the terms'),
     })
 
     // check the validity of input
@@ -45,7 +55,7 @@ const SignUpForm =props=>{
 
     const validateInput = event=>{
         yup
-        .reach(user,event.target.name)
+        .reach(formSchema,event.target.name)
         .validate(event.target.type==='checkbox'?event.target.checked:event.target.value)
         .then(valid=>{
             setErrors(
@@ -63,11 +73,8 @@ const SignUpForm =props=>{
     const handleChange= event=>{
         event.persist();
         let newVal = event.target.type==='checkbox'? event.target.checked:event.target.value
-        let newUser = {
-            id: Date.now(),
-            [event.target.name]:newVal
-        }
-        setUser({...user,newUser})
+       
+        setUser({...user,[event.target.name]:newVal})
         validateInput(event)
 
         console.log('user in Sign up form has changed',user)
@@ -108,26 +115,46 @@ const SignUpForm =props=>{
     return(
         
         <div className='form-container'>
+            <h1>Welcome to How Tos Registration Form</h1>
             <form onSubmit={submitForm}>
-                <label htmlFor='name'>Name</label>
-                <input type='text' id='name' name ='name' value={user.name} onChange={handleChange}/>
-                <label htmlFor='email'>Email</label>
-                <input type='email' id='email' name ='email' value={user.email} onChange={handleChange}/>
-                <label htmlFor='userName'>User Name</label>
-                <input type='text' id='userName' name ='userName' value={user.userName} onChange={handleChange}/>
-                <label htmlFor='password'>Password</label>
-                <input type='text' id='password' name ='password' value={user.password} onChange={handleChange}/>
-                <label htmlFor='confirmPassword'>Confirm Password</label>
-                <input type='text' id='confirmPassword' name ='confirmPassword' value={user.confirmPassword} onChange={handleChange}/>
-                <label htmlFor='terms'>Please agree to the terms</label>
-                <input type='checkbox' id='terms' name ='terms' checked={user.terms} onChange={handleChange}/>
-                
-                <button>sign up </button>
+                <Group>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name ='name' value={user.name} onChange={handleChange}/>
+                    {errors.name.length>0?<p className='error'>{errors.name}</p>:null}
+                 
+                </Group>
+                <Group>
+                    <label htmlFor='email'>Email</label>
+                    <input type='email' id='email' name ='email' value={user.email} onChange={handleChange}/>
+                    {errors.email.length>0?<p className='error'>{errors.email}</p>:null}
+                </Group>
+                <Group>
+                    <label htmlFor='userName'>User Name</label>
+                    <input type='text' id='userName' name ='userName' value={user.userName} onChange={handleChange}/>
+                    {errors.userName.length>0?<p className='error'>{errors.userName}</p>:null}
+                </Group>
+                <Group>
+                    <label htmlFor='password'>Password</label>
+                    <input type='text' id='password' name ='password' value={user.password} onChange={handleChange}/>
+                    {errors.password.length>0?<p className='error'>{errors.password}</p>:null}
+                </Group>
+                <Group>
+                    <label htmlFor='confirmPassword'>Confirm Password</label>
+                    <input type='text' id='confirmPassword' name ='confirmPassword' value={user.confirmPassword} onChange={handleChange}/>
+                    {errors.confirmPassword.length>0?<p className='error'>{errors.confirmPassword}</p>:null}
+                </Group>
+                <Group>
+                    <label htmlFor='terms'>Please agree to the terms</label>
+                    <input type='checkbox' id='terms' name ='terms' checked={user.terms} onChange={handleChange}/>
+                    {errors.terms.length>0?<p className='error'>{errors.terms}</p>:null}
+                </Group>
+
+                <Link to='/dashboard'>sign up </Link>
                 
 
             </form>
             <div className='button-container'>
-                <span><button>Log in</button> if you have an count</span>
+                <span><Link to ='/'>Log in</Link> if you have an count</span>
                
             </div>
         </div>
