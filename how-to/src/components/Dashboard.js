@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect, useContext} from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 import { GlobalContext} from "../context/GlobalContext";
@@ -12,16 +13,15 @@ export default function Dashboard () {
         content: ""
     })
 
-    const getHowTos = _ => {
-        axiosWithAuth().get("https://url.herokuapp.com/howtos")
+   
+ 
+  
+      useEffect(() => {
+      axiosWithAuth().get("https://url.herokuapp.com/howtos")
             .then(res => setHowtos(res.data))
             .catch(err => console.log(err))
-    }
-//help
-    // useEffect( _ => {
-    //     getQuotes();
 
-    //     });
+         }, []);
  
 
     const toggleEdit = howto => {
@@ -83,3 +83,5 @@ export default function Dashboard () {
 
     )
 }
+
+

@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Nav from "./components/Nav";
@@ -6,8 +7,10 @@ import PrivateRoute from "./utils/PrivateRoute"
 import AuthForm from "./components/AuthForm"
 import Dashboard from "./components/Dashboard"
 
+
 function App() {
   const [howtos, setHowtos] = useState([]);
+  const[users,setUsers] = useState([])
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem("token") ? true : false);
   return (
     <GlobalContext.Provider value={{howtos, setHowtos, loggedIn, setLoggedIn}}>
