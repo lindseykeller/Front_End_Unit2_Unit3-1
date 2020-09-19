@@ -1,4 +1,5 @@
 
+
 import React,{useState,useEffect} from 'react'
 import Dashboard from './Dashboard'
 import *as yup from 'yup'
@@ -11,9 +12,9 @@ display:block`
 
 
 
+
 const LogInForm =props=>{
 
-   
     
     const[users,setUsers]= useState([{
        
@@ -24,7 +25,6 @@ const LogInForm =props=>{
 
     }]);
  
-    console.log('users in Login',users)
    
     const[loginUser,setLoginUser]= useState({
         userName:'',
@@ -33,6 +33,9 @@ const LogInForm =props=>{
     })
 
     const[errors,setErrors] = useState({
+
+        
+
         userName:'',
         password:'',
         message:''
@@ -42,6 +45,7 @@ const LogInForm =props=>{
         userName: yup.string().required('must enter user name'),
         password: yup.string().required('must enter password')
     })
+
     const handleChange= event=>{
        
         setLoginUser({...loginUser,[event.target.name]:event.target.value})
@@ -66,6 +70,15 @@ const LogInForm =props=>{
 
     return(
         <div className='form-container'>
+
+            <form onSubmit={grantAccess}>
+            <label htmlFor='name'>Name</label>
+            <input type='text' id='userName' name ='userName' value={loginUser.userName} onChange={handleChange}/>
+                <label htmlFor='password'>Password</label>
+                <input type='text' id='password' name ='password' value={loginUser.password} onChange={handleChange}/>
+
+                {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null}
+
             <div className='navs'>
                 <Link to = '/marketingPage'>Home</Link>
             </div>
@@ -82,6 +95,7 @@ const LogInForm =props=>{
                 </Group>
                 
 
+
                 <button>Log in</button>
             </form>
             <div className='button-container'>
@@ -94,5 +108,6 @@ const LogInForm =props=>{
            
         </div>
     )
-}
+
 export default LogInForm
+
