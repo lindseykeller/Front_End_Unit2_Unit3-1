@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
-import {ContextProvider} from "../context/GlobalContext";
+import {GlobalContext} from "../context/GlobalContext";
 
 export default function AddHowToForm() {
-    const {howtos, setHowTos} = React.useContext(ContextProvider);
+    const {howtos, setHowTos} = React.useContext(GlobalContext);
     const [newHowTo, setNewHowTo] = useState({
         title: "",
         content: ""

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {ContextProvider} from "../context/GlobalContext";
+import {GlobalContext} from "../context/GlobalContext";
 
 export default function AuthForm({role, history}) {
-    const {setLoggedIn} = React.useContext(ContextProvider);
+    const {setLoggedIn} = React.useContext(GlobalContext);
 
     const [authInfo, setAuthInfo] = useState( {
         username: "me",

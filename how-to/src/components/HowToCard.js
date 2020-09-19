@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { ContextProvider } from "../context/GlobalContext";
+import { GlobalContext } from "../context/GlobalContext";
 
 export const HowToCard = (props) => {
-  const { howtos, setHowtos } = useContext(ContextProvider);
+  const { howtos, setHowtos } = useContext(GlobalContext);
   const [editing, setEditing] = useState(0);
   const [edited, setEdited] = useState({
     title: "",
