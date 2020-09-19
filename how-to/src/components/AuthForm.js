@@ -6,8 +6,8 @@ export default function AuthForm({role, history}) {
     const {setLoggedIn} = React.useContext(GlobalContext);
 
     const [authInfo, setAuthInfo] = useState( {
-        username: "",
-        password: ""
+        username: "me",
+        password: "123"
     })
 
     const handleChange = e => {
@@ -21,7 +21,7 @@ export default function AuthForm({role, history}) {
         e.preventDefault();
 
         
-        axios.post( `https://better-professor-build-week.herokuapp.com/auth/register`, authInfo)
+        axios.post( `https://better-professor-build-week.herokuapp.com/auth/login`, authInfo)
             .then(res => {
                 console.log(res)
                     setLoggedIn(true);
@@ -34,7 +34,7 @@ export default function AuthForm({role, history}) {
 
     return (
         <div className="auth-page">
-            <h1>Please {role}</h1>
+            <h1>Please Login</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     name="username"
