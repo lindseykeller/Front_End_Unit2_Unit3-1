@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.navs {
+  padding:1% 5%;
+  background: #6fd4e6;
+}
+.navs a{
+  text-decoration: none;
+  font-size:1.2rem;
+  font-weight:600;
+  color:white;
+  
+}
+.error {
+  color:red;
+  font-size:1.2rem;
+  font-weight:550
+}
+

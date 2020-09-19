@@ -12,6 +12,8 @@ display:block`
 
 const SignUpForm =props=>{
 
+    let {users,setUsers} = props;
+
     const defaultState = {
         name:'',
         email:'',
@@ -36,17 +38,13 @@ const SignUpForm =props=>{
     })
 
     const formSchema = yup.object().shape({
-        name: yup.string().required('Name is a required field').min(2,'minimum tow characters'),
+        name: yup.string().required('Name is a required field').min(2,'minimum two characters'),
         email: yup.string().email('enter a valid email').required('email is required field'),
         userName: yup.string().required('Must choose a user name').min(4,'minimum four characters'),
-        password: yup.string().required("Please enter your password.").matches(
-          /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-          "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-        )
-        .min(6),
-        confirmPassword: yup.string().required("Please recomfirm your password.")
-        .matches(user.password)
-        .min(6),
+        password: yup.string().required("Please enter your password.").min(6), /*matches(
+            /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+            "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character")*/
+        confirmPassword: yup.string().matches([user.password],'Passwords must match'),
         terms: yup.boolean().oneOf([true],'please agree the terms'),
     })
 
@@ -77,7 +75,7 @@ const SignUpForm =props=>{
         setUser({...user,[event.target.name]:newVal})
         validateInput(event)
 
-        console.log('user in Sign up form has changed',user)
+        // console.log('user in Sign up form has changed',user)
     }
 
     //enable submit button if the form validated 
@@ -95,26 +93,32 @@ const SignUpForm =props=>{
         setUser(defaultState)
     }
     const submitForm = event=>{
+
         event.preventDefault();
         axios
         .post('https://reqres.in/api/users',user)
         .then(res=>{
-
-            props.setUsers([...props.users,res.data])
+            console.log('res.data',res.data);
+            props.setUsers([...props.users,res.data]);
+            
         })
         .catch(err=>{
-            console.log("Didn't work")
+            console.log("Didn't work",err)
         })
 
-    //    props.setUsers([...props.users,[event.target.name]:event.target.value])
+    //    setUsers([{...users,[event.target.name]:event.target.value}])
        reset();
-       console.log('form submitted')
+       console.log('form submitted');
+       
 
     }
 
     return(
         
         <div className='form-container'>
+             <div className='navs'>
+                <Link to = '/marketingPage'>Home</Link>
+            </div>
             <h1>Welcome to How Tos Registration Form</h1>
             <form onSubmit={submitForm}>
                 <Group>
@@ -149,7 +153,7 @@ const SignUpForm =props=>{
                     {errors.terms.length>0?<p className='error'>{errors.terms}</p>:null}
                 </Group>
 
-                <Link to='/dashboard'>sign up </Link>
+               <button disabled={disabledButton} > sign up </button>
                 
 
             </form>
