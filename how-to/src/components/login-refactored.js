@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import *as yup from 'yup'
-import { GlobalContext } from "../context/GlobalContext";
+import { ContextProvider } from "../context/GlobalContext";
 import styled from 'styled-components'
 
 const Group = styled.div`

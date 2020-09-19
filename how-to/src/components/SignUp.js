@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {Route,Link} from 'react-router-dom';
+import {GlobalContext} from "../context/GlobalContext";
 import LogInForm from './Login';
 import * as yup from 'yup';
 import axios from 'axios';

@@ -34,8 +34,6 @@ const LogInForm =props=>{
 
     const[errors,setErrors] = useState({
 
-        
-
         userName:'',
         password:'',
         message:''
@@ -69,7 +67,7 @@ const LogInForm =props=>{
 
 
     return(
-        <div className='form-container'>
+<>
 
             <form onSubmit={grantAccess}>
             <label htmlFor='name'>Name</label>
@@ -78,7 +76,7 @@ const LogInForm =props=>{
                 <input type='text' id='password' name ='password' value={loginUser.password} onChange={handleChange}/>
 
                 {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null}
-
+             </form>
             <div className='navs'>
                 <Link to = '/marketingPage'>Home</Link>
             </div>
@@ -93,21 +91,12 @@ const LogInForm =props=>{
                     <input type='text' id='password' name ='password' value={loginUser.password} onChange={handleChange}/>
                     {/* {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null} */}
                 </Group>
-                
-
 
                 <button>Log in</button>
             </form>
-            <div className='button-container'>
+            </>
+    //         {/* <div className='button-container'>
               
-               <span> If you don't have acoount register here <Link to='/signup'>sign up </Link></span> 
-            </div>
-
-
-         
-           
-        </div>
-    )
-
-export default LogInForm
-
+    //            <span> If you don't have acoount register here <Link to='/signup'>sign up </Link></span> 
+    // </div> */}
+    )}

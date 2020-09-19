@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
-import {GlobalContext} from "../context/GlobalContext";
+import {ContextProvider} from "../context/GlobalContext";
 
 export default function AddHowToForm() {
-    const {howtos, setHowTos} = React.useContext(GlobalContext);
+    const {howtos, setHowTos} = React.useContext(ContextProvider);
     const [newHowTo, setNewHowTo] = useState({
         title: "",
         content: ""
@@ -36,7 +36,7 @@ export default function AddHowToForm() {
                 value={newHowTo.howto}
                 onChange={handleChange} 
                 placeholder="Title"/>
-            <input
+            <textarea
                 name="content"
                 value={newHowTo.content}
                 onChange={handleChange} 

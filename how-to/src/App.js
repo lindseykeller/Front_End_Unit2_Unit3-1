@@ -2,26 +2,32 @@
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Nav from "./components/Nav";
-import {GlobalContext} from "./context/GlobalContext";
-import PrivateRoute from "./utils/PrivateRoute"
-import AuthForm from "./components/AuthForm"
-import Dashboard from "./components/Dashboard"
-
+import {ContextProvider} from "./context/GlobalContext";
+import PrivateRoute from "./utils/PrivateRoute";
+import AuthForm from "./components/AuthForm";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  const [howtos, setHowtos] = useState([]);
-  const[users,setUsers] = useState([])
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("token") ? true : false);
+   //moved to global context
+  // const [howtos, setHowtos] = useState([]);
+  // // const[users,setUsers] = useState([])
+  // const [loggedIn, setLoggedIn] = useState(localStorage.getItem("token") ? true : false);
   return (
-    <GlobalContext.Provider value={{howtos, setHowtos, loggedIn, setLoggedIn}}>
+    <ContextProvider>
       <div className="App">
         <Nav/>
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <Route path="/login" render={ props => <AuthForm {...props} role="login" /> } />
-        <Route path="/signup" render={ props => <AuthForm {...props} role="sign up" /> } />
+        <Route path="/signup" render={ props => <AuthForm {...props} role="signup" /> } />
+        
+
+        {/* <Route path="/login" render={ props => <Login {...props} /> } />
+        <Route path="/signup" render={ props => <SignUpForm {...props} /> } /> */}
         
       </div>
-    </GlobalContext.Provider>
+    </ContextProvider>
   );
 }
 
