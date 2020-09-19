@@ -10,7 +10,6 @@ function App() {
   const [howtos, setHowtos] = useState([]);
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem("token") ? true : false);
   return (
-    <Router>
     <GlobalContext.Provider value={{howtos, setHowtos, loggedIn, setLoggedIn}}>
       <div className="App">
         <Nav/>
@@ -20,7 +19,6 @@ function App() {
         
       </div>
     </GlobalContext.Provider>
-  </Router>
   );
 }
 

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 import {GlobalContext} from "../context/GlobalContext";
 
-export default function AddQuoteForm() {
+export default function AddHowToForm() {
     const {howtos, setHowTos} = React.useContext(GlobalContext);
     const [newHowTo, setNewHowTo] = useState({
         title: "",

@@ -52,10 +52,9 @@ export default function Dashboard () {
 
     return(
         <div>
-            {howtos.map(howto => {
+             <AddHowToForm />
+            {/* {howtos.map(howto => {
                 return (
-                
-                
                     
                 <div key={howto.id}>
                     {editing === howto.id 
@@ -76,10 +75,10 @@ export default function Dashboard () {
                     <button onClick={_ => toggleEdit(howto)}>{editing===howto.id ? "Submit": "Edit How To"} </button>
                     <button onClick={ _ => deleteHowTo(howto.id)}>Delete HowTo</button>
                 </div>
-               
+                */}
             )
             })}
-            <AddHowToForm />
+           
         </div>
 
     )

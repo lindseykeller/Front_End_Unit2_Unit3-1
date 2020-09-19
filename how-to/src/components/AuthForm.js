@@ -21,14 +21,14 @@ export default function AuthForm({role, history}) {
         e.preventDefault();
 
         
-        axios.post( `https://url.herokuapp.com/auth/${role}`, authInfo)
+        axios.post( `https://better-professor-build-week.herokuapp.com/auth/register`, authInfo)
             .then(res => {
                 console.log(res)
                     setLoggedIn(true);
                     localStorage.setItem("token", res.data.token)
                     history.push('/howtos')
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err.message))
     }
 
 

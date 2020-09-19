@@ -15,7 +15,7 @@ export default function Navigation() {
         <div>
             <Link to="/howtos">Dashboard</Link>
             {loggedIn 
-            ? <Link onClick={logout}>Log Out</Link>
+            ? <Link to = "/howtos" onClick={logout}>Log Out</Link>
             : <>
             <Link to="/login">Log In</Link>
             <Link to="/signup">Sign Up</Link>
