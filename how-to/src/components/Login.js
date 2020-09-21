@@ -34,21 +34,46 @@ const LogInForm =props=>{
 
     const[errors,setErrors] = useState({
 
-        
-
         userName:'',
         password:'',
-        message:''
+       
     })
+    const[disabledButton,setDisabledButton] = useState(true);
 
     const logFormSchema = yup.object().shape({
         userName: yup.string().required('must enter user name'),
         password: yup.string().required('must enter password')
     })
 
+    const validate = e=>{
+        yup
+        .reach(logFormSchema,e.target.name)
+        .validate(e.target.value)
+        .then(valid=>{
+            setErrors(
+                {...errors,[e.target.name]:''
+            })
+        })
+        .catch(err=>{
+            setErrors(
+                {...errors,[e.target.name]:err.errors[0]
+            })
+        })
+    }
+    //enable submit button if the form validated 
+    useEffect(()=>{
+        logFormSchema
+        .isValid(loginUser)
+        .then(valid=>{
+            setDisabledButton(!valid)
+        })
+
+    },[loginUser])
+
     const handleChange= event=>{
        
         setLoginUser({...loginUser,[event.target.name]:event.target.value})
+        validate(event);
         console.log('user Login in Login form has changed',loginUser)
     }
 
@@ -71,32 +96,23 @@ const LogInForm =props=>{
     return(
         <div className='form-container'>
 
-            <form onSubmit={grantAccess}>
-            <label htmlFor='name'>Name</label>
-            <input type='text' id='userName' name ='userName' value={loginUser.userName} onChange={handleChange}/>
-                <label htmlFor='password'>Password</label>
-                <input type='text' id='password' name ='password' value={loginUser.password} onChange={handleChange}/>
-
-                {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null}
-
-            <div className='navs'>
-                <Link to = '/marketingPage'>Home</Link>
-            </div>
+          
             <h1>Welcome to Sign in to How Tos</h1>
             <form onSubmit={grantAccess}>
                 <Group>
                     <label htmlFor='userName'>User Name</label>
                     <input type='text' id='userName' name ='userName' value={loginUser.userName} onChange={handleChange}/>
+                    {errors.userName.length>0?<p className= 'error'>{errors.userName}</p>:null}
                 </Group>
                 <Group>
                     <label htmlFor='password'>Password</label>
                     <input type='text' id='password' name ='password' value={loginUser.password} onChange={handleChange}/>
-                    {/* {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null} */}
+                    {errors.password.length>0?<p className= 'error'>{errors.password}</p>:null}
                 </Group>
                 
 
 
-                <button>Log in</button>
+                <button disabled={disabledButton}>Log in</button>
             </form>
             <div className='button-container'>
               
@@ -108,6 +124,7 @@ const LogInForm =props=>{
            
         </div>
     )
+}
 
 export default LogInForm
 

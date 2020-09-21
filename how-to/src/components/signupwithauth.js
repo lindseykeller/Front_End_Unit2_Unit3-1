@@ -8,12 +8,59 @@ export default function Form({role, history}) {
     const [authInfo, setAuthInfo] = useState( {
         name:'',
         email:'',
-        address:'',
-        phone: '',
         password:'',
         confirmPassword:'',
         terms:false,
     })
+    const[disabledButton,setDisabledButton] = useState(true)
+
+    const[errors,setErrors] = useState({
+        name:'',
+        email:'',
+        userName:'',
+        password:'',
+        confirmPassword:'',
+        terms:'',
+    })
+
+    const formSchema = yup.object().shape({
+        name: yup.string().required('Name is a required field').min(2,'minimum two characters'),
+        email: yup.string().email('enter a valid email').required('email is required field'),
+        userName: yup.string().required('Must choose a user name').min(4,'minimum four characters'),
+        password: yup.string().required("Please enter your password.").min(6), /*matches(
+            /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+            "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character")*/
+        confirmPassword: yup.string().matches([user.password],'Passwords must match'),
+        terms: yup.boolean().oneOf([true],'please agree the terms'),
+    })
+
+    // check the validity of input
+  
+
+    const validateInput = event=>{
+        yup
+        .reach(formSchema,event.target.name)
+        .validate(event.target.type==='checkbox'?event.target.checked:event.target.value)
+        .then(valid=>{
+            setErrors(
+                {...errors,[event.target.name]:''
+            })
+        })
+        .catch(err=>{
+            setErrors(
+                {...errors,[event.target.name]:err.errors[0]
+            })
+        })
+
+    }
+    useEffect(()=>{
+        formSchema
+        .isValid(authInfo)
+        .then(valid=>{
+            setDisabledButton(!valid)
+        })
+
+    },[authInfo])
 
     const handleChange = e => {
         setAuthInfo({
@@ -38,26 +85,53 @@ export default function Form({role, history}) {
 
     return(
         <div className='form-container'>
-            <form onsubit={handleSubmit}>
-                <label htmlFor='name'>Name</label>
-                <input type='text' id='name' name ='name' value={user.name} onChange={handleChange}/>
-                <label htmlFor='email'>Email</label>
-                <input type='email' id='email' name ='email' value={user.email} onChange={handleChange}/>
-                <label htmlFor='address'>Address</label>
-                <input type='text' id='address' name ='address' value={user.address} onChange={handleChange}/>
-                <label htmlFor='phone'>Phone</label>
-                <input type='text' id='phone' name ='phone' value={user.phone} onChange={handleChange}/>
-                <label htmlFor='confirmPassword'>Confirm Password</label>
-                <input type='text' id='confirmPassword' name ='password' value={user.password} onChange={handleChange}/>
-                <input type='checkbox' id='terms' name ='terms' checked={user.terms} onChange={handleChange}/>
-                <label htmlFor='confirmPassword'>Confirm Password</label>
-                
-                <button>Log in</button>
-         
+        <div className='navs'>
+           <Link to = '/marketingPage'>Home</Link>
+       </div>
+       <h1>Welcome to How Tos Registration Form</h1>
+       <form onSubmit={handleSubmit}>
+           <Group>
+               <label htmlFor='name'>Name</label>
+               <input type='text' id='name' name ='name' value={authInfo.name} onChange={handleChange}/>
+               {errors.name.length>0?<p className='error'>{errors.name}</p>:null}
+            
+           </Group>
+           <Group>
+               <label htmlFor='email'>Email</label>
+               <input type='email' id='email' name ='email' value={authInfo.email} onChange={handleChange}/>
+               {errors.email.length>0?<p className='error'>{errors.email}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='userName'>User Name</label>
+               <input type='text' id='userName' name ='userName' value={authInfo.userName} onChange={handleChange}/>
+               {errors.userName.length>0?<p className='error'>{errors.userName}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='password'>Password</label>
+               <input type='text' id='password' name ='password' value={authInfo.password} onChange={handleChange}/>
+               {errors.password.length>0?<p className='error'>{errors.password}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='confirmPassword'>Confirm Password</label>
+               <input type='text' id='confirmPassword' name ='confirmPassword' value={authInfo.confirmPassword} onChange={handleChange}/>
+               {errors.confirmPassword.length>0?<p className='error'>{errors.confirmPassword}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='terms'>Please agree to the terms</label>
+               <input type='checkbox' id='terms' name ='terms' checked={authInfo.terms} onChange={handleChange}/>
+               {errors.terms.length>0?<p className='error'>{errors.terms}</p>:null}
+           </Group>
 
-            </form>
-            <span> If you don't have acoount register here <button>sign up </button></span> 
-            </div>
+          <button disabled={disabledButton} > sign up </button>
+           
+
+       </form>
+       <div className='button-container'>
+           <span><Link to ='/'>Log in</Link> if you have an count</span>
+          
+       </div>
+   </div>
+  
     
     )
 }

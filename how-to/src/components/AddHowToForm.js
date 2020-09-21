@@ -20,8 +20,8 @@ export default function AddHowToForm() {
         e.preventDefault();
         axiosWithAuth().post("https://url.com/howtos", newHowTo)
             .then(res => {
-                setNewHowTo([...howtos, res.data[0]])
-                setHowTos({
+                setHowTos([...howtos, res.data])
+                setNewHowTo({
                     title: "",
                     content: ""
                 })

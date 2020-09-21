@@ -6,6 +6,8 @@ import {GlobalContext} from "./context/GlobalContext";
 import PrivateRoute from "./utils/PrivateRoute"
 import AuthForm from "./components/AuthForm"
 import Dashboard from "./components/Dashboard"
+import Login from './components/Login'
+import Signup from './components/SignUp'
 
 
 function App() {
@@ -16,9 +18,12 @@ function App() {
     <GlobalContext.Provider value={{howtos, setHowtos, loggedIn, setLoggedIn}}>
       <div className="App">
         <Nav/>
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route path="/login" render={ props => <AuthForm {...props} role="login" /> } />
-        <Route path="/signup" render={ props => <AuthForm {...props} role="sign up" /> } />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+
+        {/* <Route path="/login" render={ props => <AuthForm {...props} role="login" /> } />
+        <Route path="/signup" render={ props => <AuthForm {...props} role="sign up" /> } /> */}
+        <Route exact path='/' component={Login}/>
+        <Route path='/signup' component={Signup}/>
         
       </div>
     </GlobalContext.Provider>

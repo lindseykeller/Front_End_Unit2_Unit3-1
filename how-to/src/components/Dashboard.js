@@ -3,6 +3,7 @@ import React, {useState, useEffect, useContext} from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 import { GlobalContext} from "../context/GlobalContext";
 import AddHowToForm from "./AddHowToForm";
+import HowToCard from "./HowToCard";
 
 
 export default function Dashboard () {
@@ -53,31 +54,10 @@ export default function Dashboard () {
     return(
         <div>
              <AddHowToForm />
-            {/* {howtos.map(howto => {
-                return (
-                    
-                <div key={howto.id}>
-                    {editing === howto.id 
-                    ?  <>
-                        <input 
-                            name="title"
-                            value={edited.title}
-                            onChange={handleChange} />
-                        <texarea 
-                            name="content"
-                            value={edited.content}
-                            onChange={handleChange} />
-                    </>
-                    : <>
-                        <h3>{howto.title}</h3>
-                        <p>{howto.content}</p> 
-                    </>}
-                    <button onClick={_ => toggleEdit(howto)}>{editing===howto.id ? "Submit": "Edit How To"} </button>
-                    <button onClick={ _ => deleteHowTo(howto.id)}>Delete HowTo</button>
-                </div>
-                */}
-            )
-            })}
+             <div className='how-to-card-container'>
+                <HowToCard howtos={howtos}/>
+             </div>
+            
            
         </div>
 
