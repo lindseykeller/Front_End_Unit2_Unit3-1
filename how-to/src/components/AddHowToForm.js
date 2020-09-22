@@ -36,7 +36,7 @@ export default function AddHowToForm() {
                 value={newHowTo.howto}
                 onChange={handleChange} 
                 placeholder="Title"/>
-            <input
+            <textarea
                 name="content"
                 value={newHowTo.content}
                 onChange={handleChange} 
