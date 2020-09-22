@@ -86,7 +86,7 @@ export default function Form({role, history}) {
         e.preventDefault();
 
         
-        axios.post( `https://better-professor-build-week.herokuapp.com/auth/register`, authInfo)
+        axios.post( `/api/auth/register`, authInfo)
             .then(res => {
                 console.log('form submitted sign up with resp',res)
                     setLoggedIn(true);

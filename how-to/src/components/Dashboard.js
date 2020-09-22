@@ -55,7 +55,10 @@ export default function Dashboard () {
         <div className='dashboard-conatainer'>
 
              <AddHowToForm />
-             <HowToCard howtos={howtos}/>
+             <div className='card-list-container'>
+                <HowToCard howtos={howtos}/>
+             </div>
+            
               
         </div>
 

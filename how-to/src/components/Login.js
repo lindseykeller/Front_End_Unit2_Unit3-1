@@ -44,7 +44,7 @@ const logFormSchema = yup.object().shape({
 
     axios
       .post(
-        `https://better-professor-build-week.herokuapp.com/auth/login`,
+        `/api/auth/login`,
         authInfo
       )
       .then((res) => {

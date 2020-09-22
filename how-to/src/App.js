@@ -6,6 +6,7 @@ import {GlobalContext} from "./context/GlobalContext";
 import PrivateRoute from "./utils/PrivateRoute"
 import AuthForm from "./components/AuthForm"
 import Dashboard from "./components/Dashboard"
+
 import Login from './components/Login'
 import Signup from './components/SignUp'
 
