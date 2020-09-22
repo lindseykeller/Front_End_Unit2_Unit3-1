@@ -1,130 +1,90 @@
-
-
-import React,{useState,useEffect} from 'react'
-import Dashboard from './Dashboard'
+import React, { useState } from "react";
+import axios from "axios";
 import *as yup from 'yup'
-import {Route,Link} from 'react-router-dom'
-import SignUp from './SignUp'
+import { GlobalContext } from "../context/GlobalContext";
 import styled from 'styled-components'
 
 const Group = styled.div`
-display:block`
+display:flex;
+flex-direction:column;
+padding:1% 0;
+width:25%;`
+
+export default function AuthForm({ role, history }) {
+  const { setLoggedIn } = React.useContext(GlobalContext);
+
+  const [authInfo, setAuthInfo] = useState({
+    username: "",
+    password: "",
+  });
+//needed to change userName to username
+
+  const[errors,setErrors] = useState({
+
+    username:'',
+    password:'',
+    message:''
+})
+
+const logFormSchema = yup.object().shape({
+    userName: yup.string().required('must enter user name'),
+    password: yup.string().required('must enter password')
+})
 
 
+  const handleChange = (e) => {
+    setAuthInfo({
+      ...authInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-const LogInForm =props=>{
+    axios
+      .post(
+        `https://better-professor-build-week.herokuapp.com/auth/login`,
+        authInfo
+      )
+      .then((res) => {
+        console.log(res);
+        setLoggedIn(true);
+        localStorage.setItem("token", res.data.token);
+        history.push("/howtos");
+      })
+      .catch((err) => console.log(err.message));
+  };
 
-    
-    const[users,setUsers]= useState([{
-       
-        name:'',
-        email:'',
-        userName:'',
-        password:'',
+  return (
+    <div className="auth-page form-container">
+      <h1>Please Login</h1>
+      <form onSubmit={handleSubmit}>
 
-    }]);
- 
-   
-    const[loginUser,setLoginUser]= useState({
-        userName:'',
-        password:'',
+        <Group>
+          <label htmlFor="username">User Name</label>
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            value={authInfo.username}
+            onChange={handleChange}
+          />
+        </Group>
+        <Group>
+          <label htmlFor="password">Password</label>
+          <input
+            type="text"
+            id="password"
+            name="password"
+            value={authInfo.password}
+            onChange={handleChange}
+          />
+          {/* {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null} */}
+        </Group>
 
-    })
-
-    const[errors,setErrors] = useState({
-
-        userName:'',
-        password:'',
-       
-    })
-    const[disabledButton,setDisabledButton] = useState(true);
-
-    const logFormSchema = yup.object().shape({
-        userName: yup.string().required('must enter user name'),
-        password: yup.string().required('must enter password')
-    })
-
-    const validate = e=>{
-        yup
-        .reach(logFormSchema,e.target.name)
-        .validate(e.target.value)
-        .then(valid=>{
-            setErrors(
-                {...errors,[e.target.name]:''
-            })
-        })
-        .catch(err=>{
-            setErrors(
-                {...errors,[e.target.name]:err.errors[0]
-            })
-        })
-    }
-    //enable submit button if the form validated 
-    useEffect(()=>{
-        logFormSchema
-        .isValid(loginUser)
-        .then(valid=>{
-            setDisabledButton(!valid)
-        })
-
-    },[loginUser])
-
-    const handleChange= event=>{
-       
-        setLoginUser({...loginUser,[event.target.name]:event.target.value})
-        validate(event);
-        console.log('user Login in Login form has changed',loginUser)
-    }
-
-    //if credentials are correct grant access to dashboard
-
-    const grantAccess = ()=>{
-        users.map(user=>{
-            if(user.userName===loginUser.userName && user.password===user.password){
-                return (<Dashboard user = {loginUser}/>)
-            }else{
-                return setErrors('You entered invalid user Name or Password')
-            }
-            
-        })
-
-    }
-  
-
-
-    return(
-        <div className='form-container'>
-
-          
-            <h1>Welcome to Sign in to How Tos</h1>
-            <form onSubmit={grantAccess}>
-                <Group>
-                    <label htmlFor='userName'>User Name</label>
-                    <input type='text' id='userName' name ='userName' value={loginUser.userName} onChange={handleChange}/>
-                    {errors.userName.length>0?<p className= 'error'>{errors.userName}</p>:null}
-                </Group>
-                <Group>
-                    <label htmlFor='password'>Password</label>
-                    <input type='text' id='password' name ='password' value={loginUser.password} onChange={handleChange}/>
-                    {errors.password.length>0?<p className= 'error'>{errors.password}</p>:null}
-                </Group>
-                
-
-
-                <button disabled={disabledButton}>Log in</button>
-            </form>
-            <div className='button-container'>
-              
-               <span> If you don't have acoount register here <Link to='/signup'>sign up </Link></span> 
-            </div>
-
-
-         
-           
-        </div>
-    )
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
-
-export default LogInForm
-

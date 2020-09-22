@@ -3,8 +3,8 @@ import { GlobalContext } from "../context/GlobalContext";
 import axiosWithAuth from '../utils/axiosWithAuth'
 
 export const HowToCard = (props) => {
-  const { howtos, setHowtos } = useContext(GlobalContext);
-  const [editing, setEditing] = useState(0);
+  const [ howtos, setHowtos ] = useContext(GlobalContext);
+  const [editing, setEditing] = useState();
   const [edited, setEdited] = useState({
     title: "",
     content: "",
@@ -44,13 +44,13 @@ export const HowToCard = (props) => {
       .then((res) => setHowtos(howtos.filter((item) => item.id !== id)))
       .catch((err) => console.log(err));
   };
+return(
+  {howtos.map(howto => {
 
-  {
-    props.howtos.map((howto) => {
-      return (
+      
         <div key={howto.id}>
           {editing === howto.id ? (
-            <>
+            <div className='card-edit'>
               <input
                 name="title"
                 value={edited.title}
@@ -61,20 +61,20 @@ export const HowToCard = (props) => {
                 value={edited.content}
                 onChange={handleChange}
               />
-            </>
+            </div>
           ) : (
-            <>
+            <div className='card-container'>
               <h3>{howto.title}</h3>
               <p>{howto.content}</p>
-            </>
+            </div>
           )}
           <button onClick={(_) => toggleEdit(howto)}>
             {editing === howto.id ? "Submit" : "Edit How To"}{" "}
           </button>
           <button onClick={(_) => deleteHowTo(howto.id)}>Delete HowTo</button>
         </div>
-      );
-    });
-  }
+          }
+    )
+  })
 };
 export default HowToCard

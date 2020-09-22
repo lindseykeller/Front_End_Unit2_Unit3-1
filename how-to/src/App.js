@@ -17,13 +17,12 @@ function App() {
   return (
     <GlobalContext.Provider value={{howtos, setHowtos, loggedIn, setLoggedIn}}>
       <div className="App">
-        <Nav/>
+        <Nav />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
-        {/* <Route path="/login" render={ props => <AuthForm {...props} role="login" /> } />
-        <Route path="/signup" render={ props => <AuthForm {...props} role="sign up" /> } /> */}
         <Route exact path='/' component={Login}/>
         <Route path='/signup' component={Signup}/>
+        <Route path='/dashboard-test' component={Dashboard}/>
         
       </div>
     </GlobalContext.Provider>

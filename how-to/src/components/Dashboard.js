@@ -52,13 +52,11 @@ export default function Dashboard () {
 
 
     return(
-        <div>
+        <div className='dashboard-conatainer'>
+
              <AddHowToForm />
-             <div className='how-to-card-container'>
-                <HowToCard howtos={howtos}/>
-             </div>
-            
-           
+             <HowToCard howtos={howtos}/>
+              
         </div>
 
     )

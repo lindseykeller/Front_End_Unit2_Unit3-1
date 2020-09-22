@@ -18,9 +18,10 @@ export default function AddHowToForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axiosWithAuth().post("https://url.com/howtos", newHowTo)
+        axiosWithAuth().post("https://reqres.in/api/howtos", newHowTo)
             .then(res => {
                 setHowTos([...howtos, res.data])
+
                 setNewHowTo({
                     title: "",
                     content: ""

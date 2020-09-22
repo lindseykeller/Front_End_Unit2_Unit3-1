@@ -1,31 +1,27 @@
-import React,{useState,useEffect} from 'react';
-import {Route,Link} from 'react-router-dom';
-import LogInForm from './Login';
-import * as yup from 'yup';
-import axios from 'axios';
+import React, {useState,useEffect} from "react";
+import axios from "axios";
+import {GlobalContext} from "../context/GlobalContext";
 import styled from 'styled-components'
+import {Link,Route} from 'react-router-dom'
+
+import *as yup from 'yup'
 
 const Group = styled.div`
-display:block`
+display:flex;
+flex-direction:column;
+padding:1% 0;
+width:45%;`
 
+export default function Form({role, history}) {
+    const {setLoggedIn} = React.useContext(GlobalContext);
 
-
-const SignUpForm =props=>{
-
-    let {users,setUsers} = props;
-
-    const defaultState = {
+    const [authInfo, setAuthInfo] = useState( {
         name:'',
         email:'',
-        userName:'',
         password:'',
         confirmPassword:'',
         terms:false,
-
-    }
-
-    const[user,setUser]= useState(defaultState)
-
+    })
     const[disabledButton,setDisabledButton] = useState(true)
 
     const[errors,setErrors] = useState({
@@ -44,7 +40,7 @@ const SignUpForm =props=>{
         password: yup.string().required("Please enter your password.").min(6), /*matches(
             /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
             "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character")*/
-        confirmPassword: yup.string().matches([user.password],'Passwords must match'),
+        confirmPassword: yup.string().oneOf([yup.ref('password'),null],'Passwords must match'),
         terms: yup.boolean().oneOf([true],'please agree the terms'),
     })
 
@@ -67,102 +63,84 @@ const SignUpForm =props=>{
         })
 
     }
-    // track the changes
-    const handleChange= event=>{
-        event.persist();
-        let newVal = event.target.type==='checkbox'? event.target.checked:event.target.value
-       
-        setUser({...user,[event.target.name]:newVal})
-        validateInput(event)
-
-        // console.log('user in Sign up form has changed',user)
-    }
-
-    //enable submit button if the form validated 
     useEffect(()=>{
         formSchema
-        .isValid(user)
+        .isValid(authInfo)
         .then(valid=>{
             setDisabledButton(!valid)
         })
 
-    },[user])
+    },[authInfo])
 
-    // Reset form after submittion
-    const reset = ()=>{
-        setUser(defaultState)
+    const handleChange = e => {
+        e.persist();
+        let newVal = e.target.type==='checkbox'? e.target.checked:e.target.value;
+        setAuthInfo({
+            ...authInfo,
+            [e.target.name]: newVal
+        })
+        validateInput(e);
     }
-    const submitForm = event=>{
 
-        event.preventDefault();
-        axios
-        .post('https://reqres.in/api/users',user)
-        .then(res=>{
-            console.log('res.data',res.data);
-            props.setUsers([...props.users,res.data]);
-            
-        })
-        .catch(err=>{
-            console.log("Didn't work",err)
-        })
+    const handleSubmit = e => {
+        e.preventDefault();
 
-    //    setUsers([{...users,[event.target.name]:event.target.value}])
-       reset();
-       console.log('form submitted');
-       
+        
+        axios.post( `https://better-professor-build-week.herokuapp.com/auth/register`, authInfo)
+            .then(res => {
+                console.log('form submitted sign up with resp',res)
+                    setLoggedIn(true);
+                    localStorage.setItem("token", res.data.token)
+                    history.push('/howtos')
 
+            })
+            .catch(err => console.log(err.message))
     }
 
     return(
-        
         <div className='form-container'>
-             <div className='navs'>
-                <Link to = '/marketingPage'>Home</Link>
-            </div>
-            <h1>Welcome to How Tos Registration Form</h1>
-            <form onSubmit={submitForm}>
-                <Group>
-                    <label htmlFor='name'>Name</label>
-                    <input type='text' id='name' name ='name' value={user.name} onChange={handleChange}/>
-                    {errors.name.length>0?<p className='error'>{errors.name}</p>:null}
-                 
-                </Group>
-                <Group>
-                    <label htmlFor='email'>Email</label>
-                    <input type='email' id='email' name ='email' value={user.email} onChange={handleChange}/>
-                    {errors.email.length>0?<p className='error'>{errors.email}</p>:null}
-                </Group>
-                <Group>
-                    <label htmlFor='userName'>User Name</label>
-                    <input type='text' id='userName' name ='userName' value={user.userName} onChange={handleChange}/>
-                    {errors.userName.length>0?<p className='error'>{errors.userName}</p>:null}
-                </Group>
-                <Group>
-                    <label htmlFor='password'>Password</label>
-                    <input type='text' id='password' name ='password' value={user.password} onChange={handleChange}/>
-                    {errors.password.length>0?<p className='error'>{errors.password}</p>:null}
-                </Group>
-                <Group>
-                    <label htmlFor='confirmPassword'>Confirm Password</label>
-                    <input type='text' id='confirmPassword' name ='confirmPassword' value={user.confirmPassword} onChange={handleChange}/>
-                    {errors.confirmPassword.length>0?<p className='error'>{errors.confirmPassword}</p>:null}
-                </Group>
-                <Group>
-                    <label htmlFor='terms'>Please agree to the terms</label>
-                    <input type='checkbox' id='terms' name ='terms' checked={user.terms} onChange={handleChange}/>
-                    {errors.terms.length>0?<p className='error'>{errors.terms}</p>:null}
-                </Group>
+        
+       <h1>Welcome to How Tos Registration Form</h1>
+       <form onSubmit={handleSubmit}>
+           <Group>
+               <label htmlFor='name'>Name</label>
+               <input type='text' id='name' name ='name' value={authInfo.name} onChange={handleChange}/>
+               {errors.name.length>0?<p className='error'>{errors.name}</p>:null}
+            
+           </Group>
+           <Group>
+               <label htmlFor='email'>Email</label>
+               <input type='email' id='email' name ='email' value={authInfo.email} onChange={handleChange}/>
+               {errors.email.length>0?<p className='error'>{errors.email}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='userName'>User Name</label>
+               <input type='text' id='userName' name ='userName' value={authInfo.userName} onChange={handleChange}/>
+               {errors.userName.length>0?<p className='error'>{errors.userName}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='password'>Password</label>
+               <input type='text' id='password' name ='password' value={authInfo.password} onChange={handleChange}/>
+               {errors.password.length>0?<p className='error'>{errors.password}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='confirmPassword'>Confirm Password</label>
+               <input type='text' id='confirmPassword' name ='confirmPassword' value={authInfo.confirmPassword} onChange={handleChange}/>
+               {authInfo.password !=authInfo.confirmPassword?<p className='error'>{errors.confirmPassword}</p>:null}
+           </Group>
+           <Group>
+               <label htmlFor='terms'>Please agree to the terms</label>
+               <input type='checkbox' id='terms' name ='terms' checked={authInfo.terms} onChange={handleChange}/>
+               {errors.terms.length>0?<p className='error'>{errors.terms}</p>:null}
+           </Group>
 
-               <button disabled={disabledButton} > sign up </button>
-                
+          <button disabled={disabledButton} > sign up </button>
+           
 
-            </form>
-            <div className='button-container'>
-                <span><Link to ='/'>Log in</Link> if you have an count</span>
-               
-            </div>
-        </div>
-       
+       </form>
+   
+   </div>
+  
+    
     )
 }
-export default SignUpForm
