@@ -9,8 +9,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         if (localStorage.getItem('token')) {
           return <Component {...props} />
         }
-        //should it go to homepage or login if user is not signed in?
-        return <Redirect to='/login' />
+
+        return <Redirect to='/' />
+
       }}
     />
   )

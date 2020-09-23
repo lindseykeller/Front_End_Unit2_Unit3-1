@@ -27,4 +27,43 @@ code {
   font-size:1.2rem;
   font-weight:550
 }
+.form-container {
+  
+  width:auto;
+  margin: 1% 10% ;
+  padding:2% 5%;
+  font-size:1.4rem;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+}
+button {
+  padding:1.5% 5%;
+  font-size:2rem;
+  border-radius:10px;
+
+   }
+   button:enabled{
+     background: #a3a5e9;
+   }
+  
+
+
+input {
+  height:3vh;
+  font-size:1.5rem;
+  
+}
+.addNewHowTo-container input {
+  margin: 2% 0;
+}
+textarea {
+  height:25vh;
+  margin: 2% 0;
+  font-size: 1.3rem
+}
+.addNewHowTo-container button{
+  width:50%;
+  margin:1% 25%
+}
 

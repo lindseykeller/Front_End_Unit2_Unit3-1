@@ -15,6 +15,7 @@ export default function AuthForm({ role, history }) {
     password: "",
   });
 //needed to change userName to username
+
   const[errors,setErrors] = useState({
 
     username:'',
@@ -83,4 +84,6 @@ const logFormSchema = yup.object().shape({
       </form>
     </div>
   );
+
 }
+

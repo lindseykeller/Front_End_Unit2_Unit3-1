@@ -2,12 +2,15 @@
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Nav from "./components/Nav";
-import {ContextProvider} from "./context/GlobalContext";
-import PrivateRoute from "./utils/PrivateRoute";
-import AuthForm from "./components/AuthForm";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-import Dashboard from "./components/Dashboard";
+
+import {GlobalContext} from "./context/GlobalContext";
+import PrivateRoute from "./utils/PrivateRoute"
+import AuthForm from "./components/AuthForm"
+import Dashboard from "./components/Dashboard"
+import Login from './components/Login'
+import Signup from './components/SignUp'
+
+
 
 function App() {
    //moved to global context
@@ -17,14 +20,13 @@ function App() {
   return (
     <ContextProvider>
       <div className="App">
-        <Nav/>
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route path="/login" render={ props => <AuthForm {...props} role="login" /> } />
-        <Route path="/signup" render={ props => <AuthForm {...props} role="signup" /> } />
-        
+        <Nav />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
-        {/* <Route path="/login" render={ props => <Login {...props} /> } />
-        <Route path="/signup" render={ props => <SignUpForm {...props} /> } /> */}
+        <Route exact path='/' component={Login}/>
+        <Route path='/signup' component={Signup}/>
+        <Route path='/dashboard-test' component={Dashboard}/>
+
         
       </div>
     </ContextProvider>

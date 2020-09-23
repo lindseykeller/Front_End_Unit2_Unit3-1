@@ -1,12 +1,17 @@
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import *as yup from 'yup'
 import { GlobalContext } from "../context/GlobalContext";
 import styled from 'styled-components'
 
 const Group = styled.div`
-display:block`
+
+display:flex;
+flex-direction:column;
+padding:1% 0;
+width:25%;`
+
 
 export default function AuthForm({ role, history }) {
   const { setLoggedIn } = React.useContext(GlobalContext);
@@ -15,25 +20,56 @@ export default function AuthForm({ role, history }) {
     username: "",
     password: "",
   });
-//needed to change userName to username
+
+
+  const[disabledButton,setDisabledButton] = useState(true)
+
   const[errors,setErrors] = useState({
 
     username:'',
     password:'',
-    message:''
+
 })
 
 const logFormSchema = yup.object().shape({
-    userName: yup.string().required('must enter user name'),
+    username: yup.string().required('must enter user name'),
     password: yup.string().required('must enter password')
 })
 
+const validate = e=>{
+  yup
+  .reach(logFormSchema,e.target.name)
+  .validate(e.target.value)
+  .then(valid=>{
+    setErrors({...errors,[e.target.name]:''}) //if data is valid clear the error message
+  })
+  .catch(err=>{setErrors({...errors,[e.target.name]:err.errors[0]})})
+
+}
+
+useEffect(()=>{
+  logFormSchema
+  .isValid(authInfo)
+  .then(valid=>{
+    setDisabledButton(!valid)
+  })
+
+},[authInfo])
+
 
   const handleChange = (e) => {
+
+    e.persist();
+
     setAuthInfo({
       ...authInfo,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
+    validate(e)
+
+})
+
+
   };
 
   const handleSubmit = (e) => {
@@ -41,7 +77,9 @@ const logFormSchema = yup.object().shape({
 
     axios
       .post(
+
         `https://better-professor-build-week.herokuapp.com/auth/login`,
+
         authInfo
       )
       .then((res) => {
@@ -54,7 +92,10 @@ const logFormSchema = yup.object().shape({
   };
 
   return (
-    <div className="auth-page">
+
+    <div className="auth-page form-container">
+
+  
       <h1>Please Login</h1>
       <form onSubmit={handleSubmit}>
 
@@ -63,10 +104,12 @@ const logFormSchema = yup.object().shape({
           <input
             type="text"
             id="userName"
-            name="userName"
-            value={userInfo.username}
+            name="username"
+            value={authInfo.username}
             onChange={handleChange}
           />
+           {errors.username.length>0?<p className= 'error'>{errors.username}</p>:null}
+
         </Group>
         <Group>
           <label htmlFor="password">Password</label>
@@ -74,13 +117,14 @@ const logFormSchema = yup.object().shape({
             type="text"
             id="password"
             name="password"
-            value={userInfo.password}
+
+            value={authInfo.password}
             onChange={handleChange}
           />
-          {/* {errors.message.length>0?<p className= 'error'>{errors.message}</p>:null} */}
+          {errors.password.length>0?<p className= 'error'>{errors.password}</p>:null}
         </Group>
 
-        <button type="submit">Submit</button>
+        <button disabled={disabledButton} type="submit">Submit</button>
       </form>
     </div>
   );

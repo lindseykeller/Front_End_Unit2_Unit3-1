@@ -12,16 +12,19 @@ export default function Navigation() {
     }
 
     return (
-        <div>
-            <Link to="/howtos">Dashboard</Link>
+        <div className= 'navs'>
+             <a  className='navs' href = 'https://pedantic-lumiere-ff8f56.netlify.app/#'>Home</a>
+            <Link className='navs' to="/dashboard">Dashboard</Link>
             {loggedIn 
-            ? <Link to = "/howtos" onClick={logout}>Log Out</Link>
+            ? <Link className='navs' to = "/dashboard" onClick={logout}>Log Out</Link>
             : <>
-            <Link to="/login">Log In</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link className='navs' to="/">Log In</Link>
+            <Link className='navs' to="/signup">Sign Up</Link>
+            <Link className='navs' to = "/dashboard-test">Dashboard for test</Link>
             </>}
             
             
         </div>
     )
 }
+
