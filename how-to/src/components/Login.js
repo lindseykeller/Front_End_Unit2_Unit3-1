@@ -66,12 +66,7 @@ useEffect(()=>{
       [e.target.name]: e.target.value
     });
     validate(e)
-
-})
-
-
-  };
-
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
 

@@ -50,7 +50,7 @@ const HowToCard = (props) => {
     props.howtos.map((howto) => {
       return (
         <div key={howto.id}>
-          {editing === howto.id ? (
+          {editing === howto.id ? 
 
             <>
               <input
@@ -64,7 +64,7 @@ const HowToCard = (props) => {
                 onChange={handleChange}
               />
             </>
-
+          
            : 
 
             <>
@@ -84,8 +84,7 @@ const HowToCard = (props) => {
       )
     })
  
-  })
-  </div>
-  )}
+  }
+}
   export default HowToCard
 
