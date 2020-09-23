@@ -1,3 +1,4 @@
+
 import React, {useState,useEffect} from "react";
 import axios from "axios";
 import {GlobalContext} from "../context/GlobalContext";
@@ -22,6 +23,7 @@ export default function Form({role, history}) {
         confirmPassword:'',
         terms:false,
     })
+
     const[disabledButton,setDisabledButton] = useState(true)
 
     const[errors,setErrors] = useState({
@@ -33,20 +35,45 @@ export default function Form({role, history}) {
         terms:'',
     })
 
+
+ const handleChange = e => {
+        e.persist();
+        let newVal = e.target.type==='checkbox'? e.target.checked:e.target.value;
+        setAuthInfo({
+            ...authInfo,
+            [e.target.name]: newVal
+        })
+        validateInput(e);
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        //make two forms? or use param in endpoint?
+        
+        axios.post( `https://better-professor-build-week.herokuapp.com/auth/register`, userInfo)
+            .then(res => {
+                console.log(res)
+                    setLoggedIn(true);
+                    localStorage.setItem("token", res.data.token)
+                    history.push('/login')
+            })
+            .catch(err => console.log(err.message))
+    }
+
+
     const formSchema = yup.object().shape({
         name: yup.string().required('Name is a required field').min(2,'minimum two characters'),
         email: yup.string().email('enter a valid email').required('email is required field'),
         username: yup.string().required('Must choose a user name').min(4,'minimum four characters'),
         password: yup.string().required("Please enter your password.").min(6), /*matches(
             /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-            "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character")*/
+           "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character")*/
         confirmPassword: yup.string().oneOf([yup.ref('password'),null],'Passwords must match'),
         terms: yup.boolean().oneOf([true],'please agree the terms'),
     })
 
-    // check the validity of input
-  
-
+   
     const validateInput = event=>{
         yup
         .reach(formSchema,event.target.name)
@@ -141,6 +168,7 @@ export default function Form({role, history}) {
    
    </div>
   
+
     
     )
 }

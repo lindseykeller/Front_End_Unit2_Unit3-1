@@ -1,10 +1,6 @@
-
-import React, {useState, useEffect, useContext} from "react";
-import axiosWithAuth from "../utils/axiosWithAuth";
-import { GlobalContext} from "../context/GlobalContext";
+import React from "react";
 import AddHowToForm from "./AddHowToForm";
 import HowToCard from "./HowToCard";
-
 
 export default function Dashboard () {
     const { howtos, setHowtos } = useContext(GlobalContext);
@@ -63,6 +59,5 @@ export default function Dashboard () {
         </div>
 
     )
+
 }
-
-

@@ -1,3 +1,4 @@
+
 import React, { useState,useEffect } from "react";
 import axios from "axios";
 import *as yup from 'yup'
@@ -5,10 +6,12 @@ import { GlobalContext } from "../context/GlobalContext";
 import styled from 'styled-components'
 
 const Group = styled.div`
+
 display:flex;
 flex-direction:column;
 padding:1% 0;
 width:25%;`
+
 
 export default function AuthForm({ role, history }) {
   const { setLoggedIn } = React.useContext(GlobalContext);
@@ -18,12 +21,14 @@ export default function AuthForm({ role, history }) {
     password: "",
   });
 
+
   const[disabledButton,setDisabledButton] = useState(true)
 
   const[errors,setErrors] = useState({
 
     username:'',
     password:'',
+
 })
 
 const logFormSchema = yup.object().shape({
@@ -61,6 +66,10 @@ useEffect(()=>{
       [e.target.name]: e.target.value
     });
     validate(e)
+
+})
+
+
   };
 
   const handleSubmit = (e) => {
@@ -68,7 +77,9 @@ useEffect(()=>{
 
     axios
       .post(
-        `https://reqres.in/api/auth/login`,
+
+        `https://better-professor-build-week.herokuapp.com/auth/login`,
+
         authInfo
       )
       .then((res) => {
@@ -81,7 +92,10 @@ useEffect(()=>{
   };
 
   return (
+
     <div className="auth-page form-container">
+
+  
       <h1>Please Login</h1>
       <form onSubmit={handleSubmit}>
 
@@ -95,6 +109,7 @@ useEffect(()=>{
             onChange={handleChange}
           />
            {errors.username.length>0?<p className= 'error'>{errors.username}</p>:null}
+
         </Group>
         <Group>
           <label htmlFor="password">Password</label>
@@ -102,6 +117,7 @@ useEffect(()=>{
             type="text"
             id="password"
             name="password"
+
             value={authInfo.password}
             onChange={handleChange}
           />

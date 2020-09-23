@@ -84,4 +84,6 @@ const logFormSchema = yup.object().shape({
       </form>
     </div>
   );
+
 }
+

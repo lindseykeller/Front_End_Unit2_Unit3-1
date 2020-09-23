@@ -62,6 +62,7 @@ export default function AddHowToForm() {
         axiosWithAuth().post("https://reqres.in/api/howtos", newHowTo)
             .then(res => {
                 setHowTos([...howtos, res.data])
+                console.log('how tos ',howtos);
 
                 setNewHowTo({
                     title: "",
@@ -72,13 +73,14 @@ export default function AddHowToForm() {
     }
 
     return(
+
         <form className='addNewHowTo-container' onSubmit={handleSubmit}>
             <Group>
                 <h1>Add New How To</h1>
                 <input 
                     type='text'
                     name="title"
-                    value={newHowTo.howto}
+                    value={newHowTo.title}
                     onChange={handleChange} 
                     placeholder="Title"/>
                      {errors.title.length>0?<p className= 'error'>{errors.title}</p>:null}
@@ -92,6 +94,7 @@ export default function AddHowToForm() {
                 <button disabled = {disabledButton} type="submit">Submit</button>
             </Group>
            
+
         </form>
 
     )
