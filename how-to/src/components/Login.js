@@ -66,19 +66,14 @@ useEffect(()=>{
       [e.target.name]: e.target.value
     });
     validate(e)
-
-})
-
-
-  };
-
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
       .post(
 
-        `https://better-professor-build-week.herokuapp.com/auth/login`,
+        `https://reqres.in/api/auth/login`,
 
         authInfo
       )

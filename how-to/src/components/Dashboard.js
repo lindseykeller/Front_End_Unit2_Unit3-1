@@ -1,6 +1,9 @@
 import React from "react";
 import AddHowToForm from "./AddHowToForm";
 import HowToCard from "./HowToCard";
+import { useState, useEffect, useContext } from "react" ;
+import axiosWithAuth from "../utils/axiosWithAuth";
+import {GlobalContext} from "../context/GlobalContext";
 
 export default function Dashboard () {
     const { howtos, setHowtos } = useContext(GlobalContext);
@@ -52,7 +55,12 @@ export default function Dashboard () {
 
              <AddHowToForm />
              <div className='card-list-container'>
-                <HowToCard howtos={howtos}/>
+                 {
+                    howtos.map(howto=>{
+                        return  <HowToCard howto={howto}/>
+                    }) 
+                 }
+                
              </div>
             
               
