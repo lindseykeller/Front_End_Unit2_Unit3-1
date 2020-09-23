@@ -2,7 +2,6 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import {GlobalContext} from "../context/GlobalContext";
 import styled from 'styled-components'
-import {Link,Route} from 'react-router-dom'
 
 import *as yup from 'yup'
 
@@ -18,6 +17,7 @@ export default function Form({role, history}) {
     const [authInfo, setAuthInfo] = useState( {
         name:'',
         email:'',
+        username:'',
         password:'',
         confirmPassword:'',
         terms:false,
@@ -27,7 +27,7 @@ export default function Form({role, history}) {
     const[errors,setErrors] = useState({
         name:'',
         email:'',
-        userName:'',
+        username:'',
         password:'',
         confirmPassword:'',
         terms:'',
@@ -36,7 +36,7 @@ export default function Form({role, history}) {
     const formSchema = yup.object().shape({
         name: yup.string().required('Name is a required field').min(2,'minimum two characters'),
         email: yup.string().email('enter a valid email').required('email is required field'),
-        userName: yup.string().required('Must choose a user name').min(4,'minimum four characters'),
+        username: yup.string().required('Must choose a user name').min(4,'minimum four characters'),
         password: yup.string().required("Please enter your password.").min(6), /*matches(
             /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
             "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character")*/
@@ -86,7 +86,7 @@ export default function Form({role, history}) {
         e.preventDefault();
 
         
-        axios.post( `/api/auth/register`, authInfo)
+        axios.post( `https://reqres.in/api/auth/register`, authInfo)
             .then(res => {
                 console.log('form submitted sign up with resp',res)
                     setLoggedIn(true);
@@ -114,9 +114,9 @@ export default function Form({role, history}) {
                {errors.email.length>0?<p className='error'>{errors.email}</p>:null}
            </Group>
            <Group>
-               <label htmlFor='userName'>User Name</label>
-               <input type='text' id='userName' name ='userName' value={authInfo.userName} onChange={handleChange}/>
-               {errors.userName.length>0?<p className='error'>{errors.userName}</p>:null}
+               <label htmlFor='username'>User Name</label>
+               <input type='text' id='username' name ='username' value={authInfo.username} onChange={handleChange}/>
+               {errors.username.length>0?<p className='error'>{errors.username}</p>:null}
            </Group>
            <Group>
                <label htmlFor='password'>Password</label>
@@ -134,7 +134,7 @@ export default function Form({role, history}) {
                {errors.terms.length>0?<p className='error'>{errors.terms}</p>:null}
            </Group>
 
-          <button disabled={disabledButton} > sign up </button>
+          <button type='submit' disabled={disabledButton} > sign up </button>
            
 
        </form>
