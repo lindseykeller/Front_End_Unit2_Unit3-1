@@ -51,7 +51,7 @@ export default function Form({role, history}) {
 
         //make two forms? or use param in endpoint?
         
-        axios.post( `https://better-professor-build-week.herokuapp.com/auth/register`, userInfo)
+        axios.post( `https://reqres.in/api/auth/register`, authInfo)
             .then(res => {
                 console.log(res)
                     setLoggedIn(true);
@@ -98,31 +98,6 @@ export default function Form({role, history}) {
         })
 
     },[authInfo])
-
-    const handleChange = e => {
-        e.persist();
-        let newVal = e.target.type==='checkbox'? e.target.checked:e.target.value;
-        setAuthInfo({
-            ...authInfo,
-            [e.target.name]: newVal
-        })
-        validateInput(e);
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        
-        axios.post( `https://reqres.in/api/auth/register`, authInfo)
-            .then(res => {
-                console.log('form submitted sign up with resp',res)
-                    setLoggedIn(true);
-                    localStorage.setItem("token", res.data.token)
-                    history.push('/howtos')
-
-            })
-            .catch(err => console.log(err.message))
-    }
 
     return(
         <div className='form-container'>

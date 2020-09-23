@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Nav from "./components/Nav";
 
-import {GlobalContext} from "./context/GlobalContext";
+import {ContextProvider} from "./context/GlobalContext";
 import PrivateRoute from "./utils/PrivateRoute"
 import AuthForm from "./components/AuthForm"
 import Dashboard from "./components/Dashboard"
