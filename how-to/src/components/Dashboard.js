@@ -54,13 +54,8 @@ export default function Dashboard () {
         <div className='dashboard-conatainer'>
 
              <AddHowToForm />
-             <div className='card-list-container'>
-                 {
-                    howtos.map(howto=>{
-                        return  <HowToCard howto={howto}/>
-                    }) 
-                 }
-                
+             <div className='card-list-container'>          
+                   <HowToCard />
              </div>
             
               

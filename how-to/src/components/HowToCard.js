@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import axiosAuth from '../utils/axiosWithAuth'
 
-const HowToCard = (howto) => {
+const HowToCard = (props) => {
   
   const { howtos, setHowtos } = useContext(GlobalContext);
   const [editing, setEditing] = useState(0);
@@ -45,49 +45,46 @@ const HowToCard = (howto) => {
 
   return(
 
-    <>
-    <h3>Title: {howto.title}</h3>
-    <p>Content: {howto.content}</p>
+    <div>
+    { howtos.map((howto) => {
+        return (
+          <div key={howto.id}>
+            {editing === howto.id ? 
+              <div className='card-edit'>
+                <input
+                  name="title"
+                  value={edited.title}
+                  onChange={handleChange}
+                />
+                <textarea
+                  name="content"
+                  value={edited.content}
+                  onChange={handleChange}
+                />
+              </div>
+             : 
+              <div className='card-container'>
+                <h3>{howto.title}</h3>
+                <p>{howto.content}</p>
+              </div>
+            }
+            <button onClick={(_) => toggleEdit(howto)}>
+              {editing === howto.id ? "Submit" : "Edit How To"}{" "}
+            </button>
+            <button onClick={(_) => deleteHowTo(howto.id)}>Delete HowTo</button>
+            
+          </div>
+        )
+      })
+   
+    }
+    </div>
+    )
+  }
 
-  </>
 
 
+  
 
-  )
-}
-//     <div>
-//   { props.howtos.map((howto) => {
-//       return (
-//         <div key={howto.id}>
-//           {editing === howto.id ? 
-//             <>
-//               <input
-//                 name="title"
-//                 value={edited.title}
-//                 onChange={handleChange}
-//               />
-//               <texarea
-//                 name="content"
-//                 value={edited.content}
-//                 onChange={handleChange}
-//               />
-//             </>
-//            : 
-//             <>
-//               <h3>{howto.title}</h3>
-//               <p>{howto.content}</p>
-//             </>
-//           }
-//           <button onClick={(_) => toggleEdit(howto)}>
-//             {editing === howto.id ? "Submit" : "Edit How To"}{" "}
-//           </button>
-//           <button onClick={(_) => deleteHowTo(howto.id)}>Delete HowTo</button>
-//         </div>
-//       )
-//     })
- 
-//   }
-//   </div>
-//   )
-// }
+
   export default HowToCard
