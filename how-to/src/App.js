@@ -25,7 +25,7 @@ function App() {
 
         <Route exact path='/' component={Login}/>
         <Route path='/signup' component={Signup}/>
-        <Route path='/dashboard-test' component={Dashboard}/>
+        
 
         
       </div>
