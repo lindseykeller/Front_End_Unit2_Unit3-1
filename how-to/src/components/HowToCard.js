@@ -38,7 +38,7 @@ const HowToCard = (props) => {
     setEdited({ ...edited, [e.target.name]: e.target.value });}
   const deleteHowTo = (id) => {
     axiosAuth()
-      .delete(`https://url.herokuapp.com/howtos/${id}`)
+      .delete(`https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts/:id`)
       .then((res) => setHowtos(howtos.filter((item) => item.id !== id)))
       .catch((err) => console.log(err));
   };
