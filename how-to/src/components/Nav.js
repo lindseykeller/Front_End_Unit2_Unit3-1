@@ -20,7 +20,7 @@ export default function Navigation() {
             : <>
             <Link className='navs' to="/">Log In</Link>
             <Link className='navs' to="/signup">Sign Up</Link>
-            <Link className='navs' to = "/dashboard-test">Dashboard for test</Link>
+           
             </>}
             
             
