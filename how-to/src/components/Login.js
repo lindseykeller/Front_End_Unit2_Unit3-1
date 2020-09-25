@@ -14,7 +14,7 @@ width:25%;`
 
 
 export default function AuthForm({ role, history }) {
-  const { setLoggedIn } = React.useContext(GlobalContext);
+  const [ setLoggedIn ] = React.useContext(GlobalContext);
 
   const [authInfo, setAuthInfo] = useState({
     username: "",

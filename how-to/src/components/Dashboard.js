@@ -13,7 +13,7 @@ import {GlobalContext} from "../context/GlobalContext";
 
 
 export default function Dashboard () {
-    const { howtos, setHowtos } = useContext(GlobalContext);
+    const [ howtos, setHowtos ] = useContext(GlobalContext);
     const [editing, setEditing] = useState(0);
     const [edited, setEdited] = useState({
         title: "",
@@ -21,7 +21,7 @@ export default function Dashboard () {
     })
 
    
- 
+
   
       useEffect(() => {
       axiosWithAuth().get("https://joses-how-to-api.herokuapp.com/")

@@ -13,7 +13,7 @@ padding:1% 0;
 width:45%;`
 
 export default function Form({role, history}) {
-    const {setLoggedIn} = React.useContext(GlobalContext);
+    const [setLoggedIn] = React.useContext(GlobalContext);
 
     const [authInfo, setAuthInfo] = useState( {
         name:'',
