@@ -13,7 +13,7 @@ const HowToCard = (props) => {
   });
   useEffect(() => {
     axiosAuth()
-      .get("https://url.herokuapp.com/howtos")
+      .get("https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts")
       .then((res) => setHowtos(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -23,7 +23,7 @@ const HowToCard = (props) => {
       setEditing(howto.id);
     } else {
       axiosAuth()
-        .put(`https://url.herokuapp.com/howtos/${howto.id}`, edited)
+        .put(`https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts/:id`, edited)
         .then((res) => {
           setHowtos([
             ...howtos.filter((item) => item.id !== howto.id),

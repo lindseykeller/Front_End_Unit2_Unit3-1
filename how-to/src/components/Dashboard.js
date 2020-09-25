@@ -5,6 +5,13 @@ import { useState, useEffect, useContext } from "react" ;
 import axiosWithAuth from "../utils/axiosWithAuth";
 import {GlobalContext} from "../context/GlobalContext";
 
+
+
+
+
+
+
+
 export default function Dashboard () {
     const { howtos, setHowtos } = useContext(GlobalContext);
     const [editing, setEditing] = useState(0);
@@ -17,8 +24,14 @@ export default function Dashboard () {
  
   
       useEffect(() => {
-      axiosWithAuth().get("https://url.herokuapp.com/howtos")
-            .then(res => setHowtos(res.data))
+      axiosWithAuth().get("https://joses-how-to-api.herokuapp.com/")
+            .then(res => 
+                
+                {setHowtos(res.data)
+                console.log(res)
+                
+                }
+            )
             .catch(err => console.log(err))
 
          }, []);
@@ -40,14 +53,14 @@ export default function Dashboard () {
         }
     }
 
-    const handleChange = e => setEdited({...edited, [e.target.name]: e.target.value});
+    // const handleChange = e => setEdited({...edited, [e.target.name]: e.target.value});
 
 
-    const deleteHowTo = id => {
-        axiosWithAuth().delete(`https://url.herokuapp.com/howtos/${id}`)
-            .then(res => setHowtos(howtos.filter(item => item.id !== id)))
-            .catch(err => console.log(err));
-    } 
+    // const deleteHowTo = id => {
+    //     axiosWithAuth().delete(`https://url.herokuapp.com/howtos/${id}`)
+    //         .then(res => setHowtos(howtos.filter(item => item.id !== id)))
+    //         .catch(err => console.log(err));
+    // } 
 
 
     return(

@@ -73,7 +73,7 @@ useEffect(()=>{
     axios
       .post(
 
-        `https://reqres.in/api/auth/login`,
+        `https://joses-how-to-api.herokuapp.com/api/auth/login`,
 
         authInfo
       )
@@ -81,7 +81,7 @@ useEffect(()=>{
         console.log(res);
         setLoggedIn(true);
         localStorage.setItem("token", res.data.token);
-        history.push("/howtos");
+        history.push("/Dashboard");
       })
       .catch((err) => console.log(err.message));
   };

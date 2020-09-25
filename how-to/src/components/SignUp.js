@@ -51,7 +51,7 @@ export default function Form({role, history}) {
 
         //make two forms? or use param in endpoint?
         
-        axios.post( `https://reqres.in/api/auth/register`, authInfo)
+        axios.post( `https://joses-how-to-api.herokuapp.com/api/auth/register`, authInfo)
             .then(res => {
                 console.log(res)
                     setLoggedIn(true);
@@ -60,7 +60,6 @@ export default function Form({role, history}) {
             })
             .catch(err => console.log(err.message))
     }
-
 
     const formSchema = yup.object().shape({
         name: yup.string().required('Name is a required field').min(2,'minimum two characters'),
@@ -73,7 +72,6 @@ export default function Form({role, history}) {
         terms: yup.boolean().oneOf([true],'please agree the terms'),
     })
 
-   
     const validateInput = event=>{
         yup
         .reach(formSchema,event.target.name)
