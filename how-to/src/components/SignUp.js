@@ -61,7 +61,6 @@ export default function Form({role, history}) {
             .catch(err => console.log(err.message))
     }
 
-
     const formSchema = yup.object().shape({
         name: yup.string().required('Name is a required field').min(2,'minimum two characters'),
         email: yup.string().email('enter a valid email').required('email is required field'),
@@ -73,7 +72,6 @@ export default function Form({role, history}) {
         terms: yup.boolean().oneOf([true],'please agree the terms'),
     })
 
-   
     const validateInput = event=>{
         yup
         .reach(formSchema,event.target.name)
