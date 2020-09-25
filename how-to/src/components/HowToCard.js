@@ -48,7 +48,7 @@ const HowToCard = (props) => {
     <div>
     { howtos.map((howto) => {
         return (
-          <div key={howto.id}>
+          <div className='card-edit-container' key={howto.id}>
             {editing === howto.id ? 
               <div className='card-edit'>
                 <input
@@ -68,11 +68,12 @@ const HowToCard = (props) => {
                 <p>{howto.content}</p>
               </div>
             }
+          <div className='card-button-container'>
             <button onClick={(_) => toggleEdit(howto)}>
               {editing === howto.id ? "Submit" : "Edit How To"}{" "}
             </button>
             <button onClick={(_) => deleteHowTo(howto.id)}>Delete HowTo</button>
-            
+            </div>
           </div>
         )
       })
