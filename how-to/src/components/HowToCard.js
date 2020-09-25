@@ -1,22 +1,17 @@
 
-import React, { useState, useEffect, useContext } from "react";
-import { GlobalContext } from "../context/GlobalContext";
+import React, { useState, useContext } from "react";
+import  {GlobalContext}  from "../context/GlobalContext";
 import axiosAuth from '../utils/axiosWithAuth'
 
-const HowToCard = (props) => {
+const HowToCard = () => {
   
-  const { howtos, setHowtos } = useContext(GlobalContext);
+  const [ howtos, setHowTos ] = useContext(GlobalContext);
   const [editing, setEditing] = useState(0);
   const [edited, setEdited] = useState({
     title: "",
     content: "",
   });
-  useEffect(() => {
-    axiosAuth()
-      .get("https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts")
-      .then((res) => setHowtos(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+
   const toggleEdit = (howto) => {
     if (editing !== howto.id) {
       setEdited(howto);
@@ -25,7 +20,7 @@ const HowToCard = (props) => {
       axiosAuth()
         .put(`https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts/:id`, edited)
         .then((res) => {
-          setHowtos([
+          setHowTos([
             ...howtos.filter((item) => item.id !== howto.id),
             res.data,
           ]);
@@ -38,8 +33,8 @@ const HowToCard = (props) => {
     setEdited({ ...edited, [e.target.name]: e.target.value });}
   const deleteHowTo = (id) => {
     axiosAuth()
-      .delete(`https://url.herokuapp.com/howtos/${id}`)
-      .then((res) => setHowtos(howtos.filter((item) => item.id !== id)))
+      .delete(`https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts/:id`)
+      .then((res) => setHowTos(howtos.filter((item) => item.id !== id)))
       .catch((err) => console.log(err));
   };
 

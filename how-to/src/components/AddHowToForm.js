@@ -59,7 +59,7 @@ export default function AddHowToForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axiosWithAuth().post("https://reqres.in/api/howtos", newHowTo)
+        axiosWithAuth().post("https://joses-how-to-api.herokuapp.com/api/auth/users/:id/posts", newHowTo)
             .then(res => {
                 setHowTos([...howtos, res.data])
                 console.log('how tos ',howtos);

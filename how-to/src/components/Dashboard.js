@@ -1,5 +1,7 @@
 import React from "react";
 import AddHowToForm from "./AddHowToForm";
+import React from "react";
+import AddHowToForm from "./AddHowToForm";
 import HowToCard from "./HowToCard";
 import { useState, useEffect, useContext } from "react" ;
 import axiosWithAuth from "../utils/axiosWithAuth";
