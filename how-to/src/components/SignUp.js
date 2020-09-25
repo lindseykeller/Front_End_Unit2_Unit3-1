@@ -51,7 +51,7 @@ export default function Form({role, history}) {
 
         //make two forms? or use param in endpoint?
         
-        axios.post( `https://reqres.in/api/auth/register`, authInfo)
+        axios.post( `https://joses-how-to-api.herokuapp.com/api/auth/register`, authInfo)
             .then(res => {
                 console.log(res)
                     setLoggedIn(true);
