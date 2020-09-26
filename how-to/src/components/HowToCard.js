@@ -58,7 +58,7 @@ const HowToCard = () => {
     howtos.map((howto) => {
    
         return (
-          <div key={howto.id}>
+          <div className='card-edit-container' key={howto.id}>
             {editing === howto.id ? 
               <div className='card-edit'>
                 <input
@@ -77,13 +77,17 @@ const HowToCard = () => {
                 <h3>{howto.title}</h3>
                 <p>{howto.contents}</p>
               </div>
-            } 
-          <button postid = {howto.id} onClick={(_) => toggleEdit(howto)}>
+
+
+            }
+          <div className='card-button-container'>
+        <button postid = {howto.id} onClick={(_) => toggleEdit(howto)}>
+
               {editing === howto.id ? "Submit" : "Edit How To"}{" "}
             </button>
             <p>{howto.title}</p>
             <button onClick={(_) => deleteHowTo(howto.id)}>Delete HowTo</button>
-            
+            </div>
           </div>
         )
       })

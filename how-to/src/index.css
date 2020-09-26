@@ -30,7 +30,9 @@ code {
   margin: 1% 10% ;
   padding:2% 5%;
   font-size:1.4rem;
-
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
 }
 button {
   padding:1.5% 5%;

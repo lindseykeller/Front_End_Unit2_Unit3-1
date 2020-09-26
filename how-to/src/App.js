@@ -24,8 +24,10 @@ function App() {
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
         <Route exact path='/' component={Login}/>
+
         <Route path='/signup' component={SignUp}/>
         <Route path='/dashboard-test' component={Dashboard}/>
+
 
         
       </div>
