@@ -79,6 +79,7 @@ useEffect(()=>{
         console.log(res);
         setLoggedIn(true);
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("id", res.data.id)
         history.push("/Dashboard");
       })
       .catch((err) => console.log(err.message));

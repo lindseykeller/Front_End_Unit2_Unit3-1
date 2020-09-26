@@ -8,7 +8,7 @@ import PrivateRoute from "./utils/PrivateRoute"
 import AuthForm from "./components/AuthForm"
 import Dashboard from "./components/Dashboard"
 import Login from './components/Login'
-import Signup from './components/SignUp'
+import SignUp from './components/SignUp'
 
 
 
@@ -24,7 +24,7 @@ function App() {
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
         <Route exact path='/' component={Login}/>
-        <Route path='/signup' component={Signup}/>
+        <Route path='/signup' component={SignUp}/>
         <Route path='/dashboard-test' component={Dashboard}/>
 
         

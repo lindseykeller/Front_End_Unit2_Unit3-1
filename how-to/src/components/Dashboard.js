@@ -1,35 +1,27 @@
 import React from "react";
 import AddHowToForm from "./AddHowToForm";
-import React from "react";
-import AddHowToForm from "./AddHowToForm";
 import HowToCard from "./HowToCard";
 import { useState, useEffect, useContext } from "react" ;
 import axiosWithAuth from "../utils/axiosWithAuth";
 import {GlobalContext} from "../context/GlobalContext";
 
 
-
-
-
-
-
-
 export default function Dashboard () {
-    const { howtos, setHowtos } = useContext(GlobalContext);
+    const {howtos, setHowTos}  = useContext(GlobalContext);
     const [editing, setEditing] = useState(0);
     const [edited, setEdited] = useState({
         title: "",
-        content: ""
+        contents: ""
     })
 
    
- 
+      let id = localStorage.getItem("id")
   
       useEffect(() => {
-      axiosWithAuth().get("https://joses-how-to-api.herokuapp.com/")
+      axiosWithAuth().get(`https://joses-how-to-api.herokuapp.com/api/users/${id}/posts`)
             .then(res => 
                 
-                {setHowtos(res.data)
+                {setHowTos(res.data)
                 console.log(res)
                 
                 }
@@ -45,9 +37,9 @@ export default function Dashboard () {
             setEditing(howto.id)
         } else {
 
-            axiosWithAuth().put(`https://url.herokuapp.com/howtos/${howto.id}`, edited)
+            axiosWithAuth().put(`https://joses-how-to-api.herokuapp.com/api/users/${id}/posts`, edited)
                 .then(res => {
-                    setHowtos([...howtos.filter(item => item.id !== howto.id), res.data])
+                    setHowTos([...howtos.filter(item => item.id !== howto.id), res.data])
                     setEditing(0);
                 })
                 .catch(err=> console.log(err))
@@ -67,7 +59,7 @@ export default function Dashboard () {
 
     return(
         <div className='dashboard-conatainer'>
-
+            
              <AddHowToForm />
              <div className='card-list-container'>          
                    <HowToCard />
