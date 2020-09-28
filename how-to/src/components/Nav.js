@@ -16,7 +16,8 @@ export default function Navigation() {
              <a  className='navs' href = 'https://pedantic-lumiere-ff8f56.netlify.app/#'>Home</a>
             <Link className='navs' to="/dashboard">Dashboard</Link>
             {loggedIn 
-            ? <Link className='navs' to = "/dashboard" onClick={logout}>Log Out</Link>
+            ? <> <Link className='navs' to = "/dashboard" onClick={logout}>Log Out</Link>  
+                <Link className='navs' to="/">Log In</Link></>
             : <>
             <Link className='navs' to="/">Log In</Link>
             <Link className='navs' to="/signup">Sign Up</Link>
